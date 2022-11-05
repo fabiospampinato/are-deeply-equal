@@ -160,12 +160,17 @@ describe ( 'Are Deeply Equal', it => {
     t.true ( areDeeplyEqual ( new Set (), new Set () ) );
     t.true ( areDeeplyEqual ( new Set ([ 'foo', 'bar' ]), new Set ([ 'foo', 'bar' ]) ) );
     t.true ( areDeeplyEqual ( new Set ([ 'foo', 'bar' ]), new Set ([ 'bar', 'foo' ]) ) );
+    t.true ( areDeeplyEqual ( new Set ([ {} ]), new Set ([ {} ]) ) );
+    t.true ( areDeeplyEqual ( new Set ([ {}, {} ]), new Set ([ {}, {} ]) ) );
+    t.true ( areDeeplyEqual ( new Set ([ new Set (), new Set () ]), new Set ([ new Set (), new Set () ]) ) );
 
     t.false ( areDeeplyEqual ( new Set ([ undefined ]), new Set () ) );
     t.false ( areDeeplyEqual ( new Set (), new Set ([ undefined ]) ) );
     t.false ( areDeeplyEqual ( new Set ([ 'foo' ]), new Set () ) );
     t.false ( areDeeplyEqual ( new Set (), new Set ([ 'foo' ]) ) );
     t.false ( areDeeplyEqual ( new Set ([ 'foo' ]), new Set ([ 'bar' ]) ) );
+    t.false ( areDeeplyEqual ( new Set ([ {}, 123 ]), new Set ([ {}, 124 ]) ) );
+    t.false ( areDeeplyEqual ( new Set ([ {}, { value: 123 } ]), new Set ([ {}, { value: 124 } ]) ) );
 
   });
 

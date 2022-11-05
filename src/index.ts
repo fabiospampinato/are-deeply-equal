@@ -40,13 +40,45 @@ const isEqualMap = ( a: Map<unknown, unknown>, b: Map<unknown, unknown>, _compar
 
 };
 
+const isEqualSetAdvanced = ( a: Set<unknown>, b: Set<unknown>, _compareMap: Map<unknown, unknown> ): boolean => {
+
+  const valuesA = Array.from ( a.values () );
+  const valuesB = Array.from ( b.values () );
+
+  outer:
+  for ( let i = valuesA.length - 1; i >= 0; i-- ) {
+
+    const valueA = valuesA[i];
+
+    for ( let j = valuesB.length - 1; j >= 0; j-- ) {
+
+      const valueB = valuesB[j];
+
+      if ( isEqualGeneral ( valueA, valueB, _compareMap ) ) {
+
+        valuesB.splice ( j, 1 );
+
+        continue outer;
+
+      }
+
+    }
+
+    return false;
+
+  }
+
+  return true;
+
+};
+
 const isEqualSet = ( a: Set<unknown>, b: Set<unknown>, _compareMap: Map<unknown, unknown> ): boolean => {
 
   if ( a.size !== b.size ) return false;
 
   for ( const [valueA] of a.entries () ) {
 
-    if ( !b.has ( valueA ) ) return false;
+    if ( !b.has ( valueA ) ) return isEqualSetAdvanced ( a, b, _compareMap );
 
   }
 
