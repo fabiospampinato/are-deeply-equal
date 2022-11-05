@@ -64,6 +64,7 @@ describe ( 'Are Deeply Equal', it => {
     t.true ( areDeeplyEqual ( [123, 'foo', true], [123, 'foo', true] ) );
     t.true ( areDeeplyEqual ( [[[123]]], [[[123]]] ) );
 
+    t.false ( areDeeplyEqual ( [], {} ) );
     t.false ( areDeeplyEqual ( [undefined], [] ) );
     t.false ( areDeeplyEqual ( [], [undefined] ) );
     t.false ( areDeeplyEqual ( ['foo'], [] ) );
@@ -97,16 +98,22 @@ describe ( 'Are Deeply Equal', it => {
 
   it ( 'supports objects', t => {
 
+    const symbol = Symbol ();
+
     t.true ( areDeeplyEqual ( {}, {} ) );
     t.true ( areDeeplyEqual ( { foo: 123, bar: 'foo' }, { foo: 123, bar: 'foo' } ) );
     t.true ( areDeeplyEqual ( { bar: 'foo', foo: 123 }, { bar: 'foo', foo: 123 } ) );
     t.true ( areDeeplyEqual ( { foo: { bar: { baz: 123 } } }, { foo: { bar: { baz: 123 } } } ) );
+    t.true ( areDeeplyEqual ( { [symbol]: 123 }, { [symbol]: 123 } ) );
 
+    t.false ( areDeeplyEqual ( {}, [] ) );
     t.false ( areDeeplyEqual ( { value: undefined }, {} ) );
     t.false ( areDeeplyEqual ( {}, { value: undefined } ) );
     t.false ( areDeeplyEqual ( { value: 123 }, {} ) );
     t.false ( areDeeplyEqual ( {}, { value: 123 } ) );
     t.false ( areDeeplyEqual ( { foo: 123, bar: 'foo' }, { foo: 124, bar: 'foo' } ) );
+    t.false ( areDeeplyEqual ( { [symbol]: 123 }, { [symbol]: 125 } ) );
+    t.false ( areDeeplyEqual ( { [Symbol ()]: 123 }, { [Symbol ()]: 123 } ) );
 
   });
 

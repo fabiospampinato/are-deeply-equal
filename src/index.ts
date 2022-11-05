@@ -1,7 +1,7 @@
 
 /* HELPERS */
 
-const {is, keys, prototype} = Object;
+const {getOwnPropertySymbols, is, keys, prototype} = Object;
 const {hasOwnProperty, valueOf} = prototype;
 const {isView} = ArrayBuffer;
 const Node = globalThis.Node;
@@ -110,6 +110,23 @@ const isEqualObject = ( a: Record<string | number | symbol, unknown>, b: Record<
     if ( !isEqualGeneral ( valueA, valueB, _compareMap ) ) return false;
 
     if ( valueB === undefined && !hasOwnProperty.call ( b, property ) ) return false;
+
+  }
+
+  const symbolsA = getOwnPropertySymbols ( a );
+  const symbolsB = getOwnPropertySymbols ( b );
+
+  if ( symbolsA.length !== symbolsB.length ) return false;
+
+  for ( let i = symbolsA.length - 1; i >= 0; i-- ) {
+
+    const symbol = symbolsA[i];
+    const valueA = a[symbol];
+    const valueB = b[symbol];
+
+    if ( !isEqualGeneral ( valueA, valueB, _compareMap ) ) return false;
+
+    if ( valueB === undefined && !hasOwnProperty.call ( b, symbol ) ) return false;
 
   }
 

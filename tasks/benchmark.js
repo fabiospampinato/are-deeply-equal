@@ -7,7 +7,7 @@ import areDeeplyEqual from '../dist/index.js';
 /* MAIN */
 
 benchmark.defaultOptions = Object.assign ( benchmark.defaultOptions, {
-  iterations: 5_000,
+  iterations: 2_000,
   log: 'compact'
 });
 
