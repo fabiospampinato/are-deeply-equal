@@ -68,6 +68,8 @@ const isEqualRegExp = ( a: RegExp, b: RegExp ): boolean => {
 
 const isEqualArrayBuffer = ( a: ArrayBuffer, b: ArrayBuffer ): boolean => {
 
+  if ( a.byteLength !== b.byteLength ) return false;
+
   return isEqualTypedArray ( new Uint8Array ( a ), new Uint8Array ( b ) );
 
 };
