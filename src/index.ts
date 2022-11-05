@@ -22,6 +22,38 @@ const isEqualArray = ( a: unknown[], b: unknown[], _compareMap: Map<unknown, unk
 
 };
 
+const isEqualMapAdvanced = ( a: Map<unknown, unknown>, b: Map<unknown, unknown>, _compareMap: Map<unknown, unknown> ): boolean => {
+
+  const entriesA = Array.from ( a.entries () );
+  const entriesB = Array.from ( b.entries () );
+
+  outer:
+  for ( let i = entriesA.length - 1; i >= 0; i-- ) {
+
+    const entryA = entriesA[i];
+
+    for ( let j = entriesB.length - 1; j >= 0; j-- ) {
+
+      const entryB = entriesB[j];
+
+      if ( isEqualGeneral ( entryA[0], entryB[0], _compareMap ) && isEqualGeneral ( entryA[1], entryB[1], _compareMap ) ) {
+
+        entriesB.splice ( j, 1 );
+
+        continue outer;
+
+      }
+
+    }
+
+    return false;
+
+  }
+
+  return true;
+
+};
+
 const isEqualMap = ( a: Map<unknown, unknown>, b: Map<unknown, unknown>, _compareMap: Map<unknown, unknown> ): boolean => {
 
   if ( a.size !== b.size ) return false;
@@ -30,7 +62,7 @@ const isEqualMap = ( a: Map<unknown, unknown>, b: Map<unknown, unknown>, _compar
 
     const valueB = b.get ( key );
 
-    if ( !isEqualGeneral ( valueA, valueB, _compareMap ) ) return false;
+    if ( !isEqualGeneral ( valueA, valueB, _compareMap ) ) return isEqualMapAdvanced ( a, b, _compareMap );
 
     if ( valueB === undefined && !b.has ( key ) ) return false;
 

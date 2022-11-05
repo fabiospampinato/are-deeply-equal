@@ -136,12 +136,17 @@ describe ( 'Are Deeply Equal', it => {
     t.true ( areDeeplyEqual ( new Map (), new Map () ) );
     t.true ( areDeeplyEqual ( new Map ([ ['foo', 123], ['bar', true] ]), new Map ([ ['foo', 123], ['bar', true] ]) ) );
     t.true ( areDeeplyEqual ( new Map ([ ['bar', true], ['foo', 123] ]), new Map ([ ['foo', 123], ['bar', true] ]) ) );
+    t.true ( areDeeplyEqual ( new Map ([ [{}, 123] ]), new Map ([ [{}, 123] ]) ) );
+    t.true ( areDeeplyEqual ( new Map ([ [{}, {}], [{}, {}] ]), new Map ([ [{}, {}], [{}, {}] ]) ) );
+    t.true ( areDeeplyEqual ( new Map ([ [new Map (), new Map ()] ]), new Map ([ [new Map (), new Map ()] ]) ) );
 
     t.false ( areDeeplyEqual ( new Map ([ ['foo', undefined] ]), new Map () ) );
     t.false ( areDeeplyEqual ( new Map (), new Map ([ ['foo', undefined] ]) ) );
     t.false ( areDeeplyEqual ( new Map ([ ['foo', 123] ]), new Map () ) );
     t.false ( areDeeplyEqual ( new Map (), new Map ([ ['foo', 123] ]) ) );
     t.false ( areDeeplyEqual ( new Map ([ ['foo', 123], ['bar', true] ]), new Map ([ ['foo', 124], ['bar', true] ]) ) );
+    t.false ( areDeeplyEqual ( new Map ([ [{}, 123] ]), new Map ([ [{}, 124] ]) ) );
+    t.false ( areDeeplyEqual ( new Map ([ [{}, { value: 123 }] ]), new Map ([ [{}, { value: 124 }] ]) ) );
 
   });
 
