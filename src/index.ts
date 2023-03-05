@@ -205,12 +205,27 @@ const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): b
   if ( typeof a === 'object' && typeof b === 'object' && a !== null && b !== null ) {
 
     const {constructor} = a;
+    const {constructor: constructorB} = b;
 
-    if ( constructor !== b.constructor ) return false;
+    if ( constructor && constructorB && constructor !== constructorB ) return false;
 
     if ( _compareMap.get ( a ) === b ) return true;
 
     _compareMap.set ( a, b );
+
+    if ( !constructor || !constructorB ) {
+
+      if ( ( !constructor || constructor === Object ) && ( !constructorB || constructorB === Object ) ) {
+
+        return isEqualObject ( a, b, _compareMap );
+
+      } else {
+
+        return false;
+
+      }
+
+    }
 
     if ( constructor === Array ) {
 

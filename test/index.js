@@ -117,6 +117,52 @@ describe ( 'Are Deeply Equal', it => {
 
   });
 
+  it ( 'supports objects without a prototype', t => {
+
+    const $ = obj => Object.setPrototypeOf ( obj, null );
+
+    const symbol = Symbol ();
+
+    t.true ( areDeeplyEqual ( $({}), $({}) ) );
+    t.true ( areDeeplyEqual ( $({ foo: 123, bar: 'foo' }), $({ foo: 123, bar: 'foo' }) ) );
+    t.true ( areDeeplyEqual ( $({ bar: 'foo', foo: 123 }), $({ bar: 'foo', foo: 123 }) ) );
+    t.true ( areDeeplyEqual ( $({ foo: { bar: { baz: 123 } } }), $({ foo: { bar: { baz: 123 } } }) ) );
+    t.true ( areDeeplyEqual ( $({ [symbol]: 123 }), $({ [symbol]: 123 }) ) );
+
+    t.false ( areDeeplyEqual ( $({ value: undefined }), $({}) ) );
+    t.false ( areDeeplyEqual ( $({}), $({ value: undefined }) ) );
+    t.false ( areDeeplyEqual ( $({ value: 123 }), $({}) ) );
+    t.false ( areDeeplyEqual ( $({}), $({ value: 123 }) ) );
+    t.false ( areDeeplyEqual ( $({ foo: 123, bar: 'foo' }), $({ foo: 124, bar: 'foo' }) ) );
+    t.false ( areDeeplyEqual ( $({ [symbol]: 123 }), $({ [symbol]: 125 }) ) );
+    t.false ( areDeeplyEqual ( $({ [Symbol ()]: 123 }), $({ [Symbol ()]: 123 }) ) );
+
+  });
+
+  it ( 'supports objects with and without a prototype', t => {
+
+    const $ = obj => Object.setPrototypeOf ( obj, null );
+
+    const symbol = Symbol ();
+
+    t.true ( areDeeplyEqual ( {}, $({}) ) );
+    t.true ( areDeeplyEqual ( $({}), {} ) );
+    t.true ( areDeeplyEqual ( { foo: 123, bar: 'foo' }, $({ foo: 123, bar: 'foo' }) ) );
+    t.true ( areDeeplyEqual ( { bar: 'foo', foo: 123 }, $({ bar: 'foo', foo: 123 }) ) );
+    t.true ( areDeeplyEqual ( { foo: { bar: { baz: 123 } } }, $({ foo: { bar: { baz: 123 } } }) ) );
+    t.true ( areDeeplyEqual ( { [symbol]: 123 }, $({ [symbol]: 123 }) ) );
+
+    t.false ( areDeeplyEqual ( $({}), [] ) );
+    t.false ( areDeeplyEqual ( { value: undefined }, $({}) ) );
+    t.false ( areDeeplyEqual ( {}, $({ value: undefined }) ) );
+    t.false ( areDeeplyEqual ( { value: 123 }, $({}) ) );
+    t.false ( areDeeplyEqual ( {}, $({ value: 123 }) ) );
+    t.false ( areDeeplyEqual ( { foo: 123, bar: 'foo' }, $({ foo: 124, bar: 'foo' }) ) );
+    t.false ( areDeeplyEqual ( { [symbol]: 123 }, $({ [symbol]: 125 }) ) );
+    t.false ( areDeeplyEqual ( { [Symbol ()]: 123 }, $({ [Symbol ()]: 123 }) ) );
+
+  });
+
   it ( 'supports dates', t => {
 
     const timestamp = Date.now ();
