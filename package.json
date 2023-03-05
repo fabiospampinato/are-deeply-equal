@@ -2,7 +2,7 @@
   "name": "are-deeply-equal",
   "repository": "github:fabiospampinato/are-deeply-equal",
   "description": "Check if two values are deeply equal to each other.",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
