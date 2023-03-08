@@ -6,7 +6,7 @@ import areDeeplyEqual from '../dist/index.js';
 
 /* MAIN */
 
-benchmark.defaultOptions = Object.assign ( benchmark.defaultOptions, {
+benchmark.config ({
   iterations: 2_000
 });
 
