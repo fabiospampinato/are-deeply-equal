@@ -86,10 +86,26 @@ describe ( 'Are Deeply Equal', it => {
 
   it ( 'supports errors', t => {
 
-    t.true ( areDeeplyEqual ( new Error (), new Error () ) );
-    t.true ( areDeeplyEqual ( new Error ( 'foo' ), new Error ( 'foo' ) ) );
-    t.true ( areDeeplyEqual ( new SyntaxError (), new SyntaxError () ) );
-    t.true ( areDeeplyEqual ( new SyntaxError ( 'foo' ), new SyntaxError ( 'foo' ) ) );
+    const error = new Error ();
+    const aggregatError = new AggregateError ([]);
+
+    t.true ( areDeeplyEqual ( error, error ) );
+    t.true ( areDeeplyEqual ( aggregatError, aggregatError ) );
+
+    t.false ( areDeeplyEqual ( new Error (), new Error () ) );
+    t.false ( areDeeplyEqual ( new Error ( 'foo' ), new Error ( 'foo' ) ) );
+    t.false ( areDeeplyEqual ( new EvalError (), new EvalError () ) );
+    t.false ( areDeeplyEqual ( new EvalError ( 'foo' ), new EvalError ( 'foo' ) ) );
+    t.false ( areDeeplyEqual ( new RangeError (), new RangeError () ) );
+    t.false ( areDeeplyEqual ( new RangeError ( 'foo' ), new RangeError ( 'foo' ) ) );
+    t.false ( areDeeplyEqual ( new ReferenceError (), new ReferenceError () ) );
+    t.false ( areDeeplyEqual ( new ReferenceError ( 'foo' ), new ReferenceError ( 'foo' ) ) );
+    t.false ( areDeeplyEqual ( new SyntaxError (), new SyntaxError () ) );
+    t.false ( areDeeplyEqual ( new SyntaxError ( 'foo' ), new SyntaxError ( 'foo' ) ) );
+    t.false ( areDeeplyEqual ( new TypeError (), new TypeError () ) );
+    t.false ( areDeeplyEqual ( new TypeError ( 'foo' ), new TypeError ( 'foo' ) ) );
+    t.false ( areDeeplyEqual ( new URIError (), new URIError () ) );
+    t.false ( areDeeplyEqual ( new URIError ( 'foo' ), new URIError ( 'foo' ) ) );
 
     t.false ( areDeeplyEqual ( new Error (), new SyntaxError () ) );
     t.false ( areDeeplyEqual ( new Error ( 'foo' ), new SyntaxError ( 'foo' ) ) );

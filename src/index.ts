@@ -124,6 +124,12 @@ const isEqualDate = ( a: Date, b: Date ): boolean => {
 
 };
 
+const isEqualError = ( a: AggregateError, b: AggregateError ): boolean => {
+
+  return a.name === b.name && a.message === b.message && a.stack === b.stack && isEqual ( a.cause, b.cause ) && isEqual ( a.errors, b.errors );
+
+};
+
 const isEqualRegExp = ( a: RegExp, b: RegExp ): boolean => {
 
   return a.source === b.source && a.flags === b.flags;
@@ -254,6 +260,10 @@ const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): b
     } else if ( isView ( a ) ) {
 
       return isEqualTypedArray ( a, b );
+
+    } else if ( constructor === Error || constructor === AggregateError || constructor === EvalError || constructor === RangeError || constructor === ReferenceError || constructor === SyntaxError || constructor === TypeError || constructor === URIError ) {
+
+      return isEqualError ( a, b );
 
     } else if ( constructor === Promise || constructor === WeakMap || constructor === WeakSet || constructor === Node ) {
 
