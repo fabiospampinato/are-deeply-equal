@@ -118,6 +118,12 @@ const isEqualSet = ( a: Set<unknown>, b: Set<unknown>, _compareMap: Map<unknown,
 
 };
 
+const isEqualDataView = ( a: DataView, b: DataView ): boolean => {
+
+  return isEqualArrayBuffer ( a.buffer, b.buffer ) && a.byteLength === b.byteLength && a.byteOffset === b.byteOffset;
+
+};
+
 const isEqualDate = ( a: Date, b: Date ): boolean => {
 
   return is ( a.getTime (), b.getTime () );
@@ -256,6 +262,10 @@ const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): b
     } else if ( constructor === ArrayBuffer ) {
 
       return isEqualArrayBuffer ( a, b );
+
+    } else if ( constructor === DataView ) {
+
+      return isEqualDataView ( a, b );
 
     } else if ( isView ( a ) ) {
 

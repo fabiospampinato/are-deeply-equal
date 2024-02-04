@@ -179,6 +179,16 @@ describe ( 'Are Deeply Equal', it => {
 
   });
 
+  it ( 'supports data views', t => {
+
+    t.true ( areDeeplyEqual ( new DataView ( new ArrayBuffer () ), new DataView ( new ArrayBuffer () ) ) );
+    t.true ( areDeeplyEqual ( new DataView ( new ArrayBuffer ( 3 ) ), new DataView ( new ArrayBuffer ( 3 ) ) ) );
+
+    t.false ( areDeeplyEqual ( new DataView ( new ArrayBuffer ( 3 ) ), new DataView ( new ArrayBuffer ( 2 ) ) ) );
+    t.false ( areDeeplyEqual ( new DataView ( new ArrayBuffer ( 3 ), 1, 1 ), new DataView ( new ArrayBuffer ( 3 ) ) ) );
+
+  });
+
   it ( 'supports dates', t => {
 
     const timestamp = Date.now ();
