@@ -120,7 +120,7 @@ const isEqualSet = ( a: Set<unknown>, b: Set<unknown>, _compareMap: Map<unknown,
 
 const isEqualDataView = ( a: DataView, b: DataView ): boolean => {
 
-  return isEqualArrayBuffer ( a.buffer, b.buffer ) && a.byteLength === b.byteLength && a.byteOffset === b.byteOffset;
+  return isEqualTypedArray ( new Uint8Array ( a.buffer, a.byteOffset, a.byteLength ), new Uint8Array ( b.buffer, b.byteOffset, b.byteLength ) );
 
 };
 
