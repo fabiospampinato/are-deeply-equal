@@ -1,4 +1,8 @@
 
+/* IMPORT */
+
+import {isPrimitive} from './utils';
+
 /* HELPERS */
 
 const {getOwnPropertySymbols, is, keys, prototype} = Object;
@@ -110,7 +114,19 @@ const isEqualSet = ( a: Set<unknown>, b: Set<unknown>, _compareMap: Map<unknown,
 
   for ( const [valueA] of a.entries () ) {
 
-    if ( !b.has ( valueA ) ) return isEqualSetAdvanced ( a, b, _compareMap );
+    if ( !b.has ( valueA ) ) {
+
+      if ( isPrimitive ( valueA ) ) {
+
+        return false;
+
+      } else {
+
+        return isEqualSetAdvanced ( a, b, _compareMap );
+
+      }
+
+    }
 
   }
 
