@@ -3,7 +3,7 @@
   "repository": "github:fabiospampinato/are-deeply-equal",
   "description": "Check if two values are deeply equal to each other.",
   "license": "MIT",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "type": "module",
   "main": "dist/index.js",
   "exports": "./dist/index.js",
