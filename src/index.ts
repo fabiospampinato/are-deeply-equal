@@ -66,7 +66,19 @@ const isEqualMap = ( a: Map<unknown, unknown>, b: Map<unknown, unknown>, _compar
 
     const valueB = b.get ( key );
 
-    if ( !isEqualGeneral ( valueA, valueB, _compareMap ) ) return isEqualMapAdvanced ( a, b, _compareMap );
+    if ( !isEqualGeneral ( valueA, valueB, _compareMap ) ) {
+
+      if ( isPrimitive ( key ) ) {
+
+        return false;
+
+      } else {
+
+        return isEqualMapAdvanced ( a, b, _compareMap );
+
+      }
+
+    }
 
     if ( valueB === undefined && !b.has ( key ) ) return false;
 
@@ -142,7 +154,7 @@ const isEqualDataView = ( a: DataView, b: DataView ): boolean => {
 
 const isEqualDate = ( a: Date, b: Date ): boolean => {
 
-  return is ( a.getTime (), b.getTime () );
+  return is ( a.getTime (), b.getTime ());
 
 };
 
