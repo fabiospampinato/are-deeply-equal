@@ -7,7 +7,7 @@ import areDeeplyEqual from '../dist/index.js';
 /* MAIN */
 
 benchmark.config ({
-  iterations: 2_000
+  iterations: 10_000
 });
 
 benchmark ({
@@ -102,6 +102,7 @@ benchmark ({
 
 benchmark ({
   name: 'errors',
+  iterations: 100,
   fn: () => {
 
     areDeeplyEqual ( new Error (), new Error () );
