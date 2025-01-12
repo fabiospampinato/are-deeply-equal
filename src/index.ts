@@ -210,7 +210,7 @@ const isEqualObject = ( a: Record<string | number | symbol, unknown>, b: Record<
 
 };
 
-const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): boolean => {
+const isEqualGeneral = ( a: any, b: any, _compareMap?: Map<unknown, unknown> ): boolean => {
 
   if ( a === b || ( a !== a && b !== b ) ) return true;
 
@@ -220,6 +220,8 @@ const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): b
     const {constructor: constructorB} = b;
 
     if ( constructor && constructorB && constructor !== constructorB ) return false;
+
+    _compareMap ||= new Map ();
 
     if ( _compareMap.get ( a ) === b ) return true;
 
@@ -297,7 +299,7 @@ const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): b
 
 const isEqual = ( a: unknown, b: unknown ): boolean => {
 
-  return isEqualGeneral ( a, b, new Map () );
+  return isEqualGeneral ( a, b );
 
 };
 
