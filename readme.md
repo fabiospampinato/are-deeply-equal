@@ -7,13 +7,15 @@ It supports comparing primitives, `Array`, `Map`, `Set`, `Date`, `RegExp`, `Arra
 ## Install
 
 ```sh
-npm install --save are-deeply-equal
+npm install are-deeply-equal
 ```
 
 ## Usage
 
 ```ts
 import areDeeplyEqual from 'are-deeply-equal';
+
+// Let's compare two values for deep equality
 
 areDeeplyEqual ( [123, { value: 'foo' }], [123, { value: 'foo' }] ); // => true
 areDeeplyEqual ( [true], [false] ); // => false
