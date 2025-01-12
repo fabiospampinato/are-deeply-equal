@@ -36,10 +36,10 @@ describe ( 'Are Deeply Equal', it => {
     t.true ( areDeeplyEqual ( -Infinity, -Infinity ) );
     t.true ( areDeeplyEqual ( 0, 0 ) );
     t.true ( areDeeplyEqual ( -0, -0 ) );
+    t.true ( areDeeplyEqual ( 0, -0 ) );
 
     t.false ( areDeeplyEqual ( NaN, Infinity ) );
     t.false ( areDeeplyEqual ( Infinity, -Infinity ) );
-    t.false ( areDeeplyEqual ( 0, -0 ) );
 
   });
 

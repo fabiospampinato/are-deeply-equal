@@ -212,7 +212,7 @@ const isEqualObject = ( a: Record<string | number | symbol, unknown>, b: Record<
 
 const isEqualGeneral = ( a: any, b: any, _compareMap: Map<unknown, unknown> ): boolean => {
 
-  if ( is ( a, b ) ) return true;
+  if ( a === b || ( a !== a && b !== b ) ) return true;
 
   if ( typeof a === 'object' && typeof b === 'object' && a !== null && b !== null ) {
 
